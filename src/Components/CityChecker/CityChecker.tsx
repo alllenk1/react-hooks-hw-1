@@ -41,53 +41,58 @@ const CityChecker: FC<CityCheckerProps> = ({ className, onSubmit, onError }) => 
             setLoading(true);
 
             fetch(`https://api.api-ninjas.com/v1/city?name=${search}&limit=10`, {
-            method: 'GET',
-                headers: {
-                'X-Api-Key': 'm1n74jUjViEVpnrpDeGNwA==lntdcBrfhcI2p5x7',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then((citiesResponse: Position[]) => {
-                setCities(citiesResponse.filter(city => city.name.toLowerCase().startsWith(search.toLowerCase())));
+                method: 'GET',
+                    headers: {
+                    'X-Api-Key': 'm1n74jUjViEVpnrpDeGNwA==lntdcBrfhcI2p5x7',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(() => onError(true))
-            .finally(() => {
-                setLoading(false);
-                setLastSearch(search);
-            })
-    }, 400)
-}, [lastSearch, loading, search]);
+                .then(response => response.json())
+                .then((citiesResponse: Position[]) => {
+                    setCities(citiesResponse.filter(city => city.name.toLowerCase().startsWith(search.toLowerCase())));
+                })
+                .catch(() => onError(true))
+                .finally(() => {
+                    setLoading(false);
+                    setLastSearch(search);
+                })
+        }, 400)
+    }, [lastSearch, loading, search]);
 
-const handleChangeCity = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-}
+    const handleChangeCity = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearch(event.target.value);
+    }
 
-const handleChooseCity = (event: React.MouseEvent<HTMLLIElement>) => {
-    const selectedCity = event.currentTarget.textContent || '';
-    setCity(event.currentTarget.textContent || '');
-    setSearch(selectedCity);
+    const handleChooseCity = (event: React.MouseEvent<HTMLLIElement>) => {
+        const selectedCity = event.currentTarget.textContent || '';
+        setCity(event.currentTarget.textContent || '');
+        setSearch(selectedCity);
 
-    onSubmit(selectedCity);
-    setCities([]);
-    setSearch('');
-}
+        onSubmit(selectedCity);
+        setCities([]);
+        setSearch('');
+    }
 
-return (
-    <form className={className}>
-        <TextField className={cnCityChecker('List')} onChange={handleChangeCity} value={search}/>
-        <div className={cnCityChecker('Result')}>
-            {cities.map(city =>
-                <MenuItem
-                    key={`${city.latitude}${city.longitude}`}
-                    className={cnCityChecker('City')}
-                    onClick={handleChooseCity}
-                >
-                    {city.name}
-                </MenuItem>)}
-        </div>
-    </form>
-);
+    return (
+        <form className={className}>
+            <TextField
+                className={cnCityChecker('List')}
+                onChange={handleChangeCity}
+                value={search}
+                label="Select city"
+            />
+            <div className={cnCityChecker('Result')}>
+                {cities.map(city =>
+                    <MenuItem
+                        key={`${city.latitude}${city.longitude}`}
+                        className={cnCityChecker('City')}
+                        onClick={handleChooseCity}
+                    >
+                        {city.name}
+                    </MenuItem>)}
+            </div>
+        </form>
+    );
 }
 
 export { CityChecker };

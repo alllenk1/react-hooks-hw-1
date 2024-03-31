@@ -47,7 +47,8 @@
 
 .Weather-Temp {
     margin: 0;
-    font-size: 64px;
+
+    font: 64px/1.5 sans-serif;
 }
 
 .Weather-Icon {
