@@ -14,8 +14,6 @@ const App = () => {
     const [isLoading, setLoading] = useState(true);
     const [isError, setError] = useState(false);
 
-    console.log('isLoading', isLoading)
-
     useEffect(() => {
         navigator.geolocation.getCurrentPosition( (position) => {
             const latitude = position.coords.latitude;
