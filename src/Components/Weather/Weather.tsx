@@ -11,7 +11,7 @@ const Weather: FC<WeatherProps> = ({ city, onError}) => {
 
     useEffect(() => {
         if (city) {
-            fetch(`http://api.weatherapi.com/v1/current.json?key=67d78e8460e64321bf4194540242903&q=${city}`)
+            fetch(`https://api.weatherapi.com/v1/current.json?key=67d78e8460e64321bf4194540242903&q=${city}`)
                 .then(response => response.json())
                 .then(data => setWeatherData({
                     temp_c: data.current.temp_c,
